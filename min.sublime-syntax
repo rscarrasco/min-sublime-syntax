@@ -1,0 +1,40 @@
+%YAML 1.2
+---
+file_extensions:
+  - min
+scope: source.min
+contexts:
+  main:
+    - match: '"'
+      scope: punctuation.definition.string.begin.min
+      push: double_quoted_string
+
+    - match: '^;|\s;'
+      scope: punctuation.definition.comment.min
+      push: line_comment
+
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.min
+
+    - match: ':[a-zA-Z\_][a-zA-Z0-9\/\!\?\+\*\.\_\-]*'
+      scope: entity.name.function.min
+
+    - match: '@[a-zA-Z\_][a-zA-Z0-9\/\!\?\+\*\.\_\-]*'
+      scope: entity.name.function.min
+
+    - match: \b(and|case|if|foreach|not|or|print|times|unless|when|while)\b
+      scope: keyword.control.min
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.min
+    - match: '\\.'
+      scope: constant.character.escape.min
+    - match: '"'
+      scope: punctuation.definition.string.end.min
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.min
+    - match: $
+      pop: true
+
